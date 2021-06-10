@@ -1,0 +1,222 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Deaths in the US, 2019</title>
+    <!-- main script for study -->
+    <script src="main.js"></script>
+    <script src="jquery.js"></script>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script type="text/javascript">
+        $(document).ready(main);
+    </script>
+</head>
+
+<body>
+    <div id="returning_worker">
+        <p>You've already done our HIT before. Please return the HIT!</p>
+    </div>
+    <div id="preview">
+        <div class='center_text'>
+            We are researchers interested in helping people understand uncertain events.
+
+            <br />
+            <br />
+            <b>
+                    You may only participate in this experiment once.
+                    
+                    <span style="color: red;">If you have seen this survey before or one like it, please return the HIT.</span>
+                </b>
+            <br />
+            <br /> Otherwise you must accept this HIT to continue.
+
+        </div>
+    </div>
+    <div id="consent">
+        <h2>US Deaths, 2019</h2>
+        <p>
+            In this task, you’ll examine statistics of deaths in the United States in 2019. This task is part of a research project on decision making. We are interested in how you do on the task without the help of external resources.
+        </p>
+        <p>You will be compensated $XXX for your participation. This HIT should take no more than XX minutes to complete.</p>
+        <hr />
+        <h3>Study Consent Form</h3>
+        <p>CONSENT FORM</p>
+        <p>By clicking “I agree” below, you confirm that you understand what the project is about and how and why it is being done. Should you have any questions concerning this project, please contact XXXXXXX.</p>
+        <p>Please confirm your acceptance by clicking “I agree.” Please print this page for your records. On behalf of XXX, we thank you for your participation.</p>
+        <form id="consent_form" action="javascript:submit_consent()">
+            <div class="center_text">
+                <p>
+                    <b>If you agree, click below. If you don't, return the HIT.</b>
+                </p>
+                <label>
+                        <input type="checkbox" required id="consent_checkbox" name="consent_checkbox" value="" /> I agree to this consent form 
+                    
+                    </label>
+            </div>
+            <div class="center_button">
+                <input type="submit" id="submit_consent" value="Continue" />
+            </div>
+        </form>
+    </div>
+    <div id="data_instructions">
+        <h3>In the next page, you'll see a chart displaying death causes and numbers in 2019 in the US.</h3>
+        <p>To proceed, please click "Continue".</p>
+        <div class="center_button">
+            <form id="submit_data_instructions," action="javascript:submit_data_instructions()">
+                <input type="submit" value="Continue" />
+            </form>
+        </div>
+    </div>
+    <div id="data_viewing" class="center_text">
+        <!-- <h3>Death Causes and Numbers in the US in 2019</h3> -->
+        <p>You can see more data by hovering over each bar.</p>
+        <p>After you finish viewing the data, click “Continue”</p>
+        <div id="vis"></div>
+        <script type="text/javascript" src="vis.js"></script>
+        <br/>
+        <div class="center_button">
+            <form id="submit_data_viewing," action="javascript:submit_data_viewing()">
+                <input type="submit" value="Continue" />
+            </form>
+        </div>
+    </div>
+    <div id="game">
+        <div id="game_instructions">
+            <h3>Breakout! Game</h3>
+            <p>You are now going to play a game for 1 minute.
+                <b>Your score won't affect your compensation.</b>
+            </p>
+            <!--      <p>Click "Start" when ready.</p> -->
+            <div class="center_button">
+                <button onclick="show_game_play(); setTimeout(countdown, 1000);">Start</button>
+            </div>
+            <!--    I learned it here: https://www.w3schools.com/js/js_timing.asp -->
+        </div>
+        <div id="game_play">
+            <!--                 <p>Click "New Game" to start & resume.</p> -->
+            <div id="console"></div>
+            <br/>
+            <div id="newgame"></div>
+            <div id="highscore"></div>
+            <div id="score"></div>
+        </div>
+    </div>
+    <div id="data_recall">
+        <h3>Data recall</h3>
+        <p>Based on the data you have seen before, please answer the following question:</p>
+        <p>
+            <b>You can't go back to the previous page. Please do NOT use any outside resources. Your answer does NOT affect your compensation!</b>
+        </p>
+        <p>
+            <b>The input should be 0-100. Be aware of the "%" outside of the input box. For example, if the percentage is 1%, you only need to input "1" in the box.</b>
+        </p>
+        <p>What percentage of deaths in the US in 2019 was due to each of the following causes?</p>
+        <form id="recall" action="javascript:submit_data_recall()">
+            <div>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Cause</th>
+                            <th>Deaths</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Suicide</td>
+                            <td>
+                                <input required type="number" placeholder="0.0" min="0" max="100" step=".1" /> %
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Car accidents</td>
+                            <td>
+                                <input required type="number" placeholder="0.0" min="0" max="100" step=".1" /> %
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Cancer</td>
+                            <td>
+                                <input required type="number" placeholder="0.0" min="0" max="100" step=".1" /> %
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Gun violence</td>
+                            <td>
+                                <input required type="number" placeholder="0.0" min="0" max="100" step=".1" /> %
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Heart disease</td>
+                            <td>
+                                <input required type="number" placeholder="0.0" min="0" max="100" step=".1" /> %
+                            </td>
+                        </tr>
+                        <!-- and so on... -->
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <input type="submit" value="Continue" />
+            </div>
+        </form>
+    </div>
+    <div id="demographics">
+        <form id="demo-form" action="javascript:submit_demographics">
+            <h3>Demographics survey</h3>
+            <p>1. What is the highest level of education you have achieved?</p>
+            <!--      <label for="education">1. What is the highest level of education you have achieved?</label><br> -->
+            <select name="degree" id="degree">
+                    <option value="">--Please choose your level of education--</option>
+                    <option value="master">Master's degree or above</option>
+                    <option value="bachelor">Bachelor's degree</option>
+                    <option value="associate">Associate's degree from a 2-year college</option>
+                    <option value="high_school">High school diploma</option>
+                    <option value="some_high_school">Some high school</option>
+                    <option value="edu_not_to_say">Prefer not to say</option>
+                </select>
+            <p>2. What's your gender?</p>
+            <!--  <label for="gender">2. What's your gender?</label><br> -->
+            <input type="radio" name="gender" value="male" /> Male
+            <br />
+            <input type="radio" name="gender" value="female" /> Female
+            <br />
+            <input type="radio" name="gender" value="other" /> Non-binary
+            <br />
+            <input type="radio" name="gender" value="gender_not_to_say" /> Prefer not to say
+
+            <p>3. What's your age?</p>
+            <!--      <label for="age">3. Your age</label><br> -->
+            <input required type="number" placeholder="18" min="0" max="130" />
+            <p>4. What's your ethinic background?</p>
+            <input type="radio" name="ethnicity" value="white" /> White/Caucasian
+            <br />
+            <input type="radio" name="ethnicity" value="east_asian" /> Asian - Eastern
+            <br />
+            <input type="radio" name="ethnicity" value="indian_asian" /> Asian - Indian
+            <br />
+            <input type="radio" name="ethnicity" value="hispanic" /> Hispanic
+            <br />
+            <input type="radio" name="ethnicity" value="african_american" /> African-American
+            <br />
+            <input type="radio" name="ethnicity" value="native_american" /> Native-American
+            <br />
+            <input type="radio" name="ethnicity" value="other" /> Other
+            <br />
+            <input type="radio" name="ethnicity" value="ethnicity_not_to_say" /> Prefer not to say
+            <br>
+            <div class="center_button">
+                <input type="submit" value="Submit" />
+            </div>
+        </form>
+    </div>
+    <div id="thankyou">
+        <h3>Thank you for your participation!</h3>
+        <p>Thank you!</p>
+    </div>
+    <script type="module">
+        import { Runtime, Inspector } from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js"; import breakout from "https://api.observablehq.com/d/cbcdcfa816f807c0.js?v=3"; const rendersBreakout = { "viewof c": "#console", "viewof newgame": "#newgame", highscore: "#highscore", score: "#score", }; const runtimeBreakout = new Runtime(); const mainBreakout = runtimeBreakout.module(breakout, (name) => { const selector = rendersBreakout[name]; if (selector) { return new Inspector(document.querySelector(selector)); } else { return true; } });
+    </script>
+</body>
+
+</html>
