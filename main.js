@@ -1,45 +1,52 @@
 // turn on/off console logging
 var DEBUG_STATE = true;
-
+var recall1, recall2, recall3, recall4, recall5;
 // subject-level variables as globals
 // we need to declear all the variables that we need to record
 var assignment_id, worker_id, hit_id, submit_to;
+var ts_consent_start; 
 
 function main() {
 	// create fake assignment id, hit id, and worker id if none provided
+
+    var url_string = window.location.href
+    var url = new URL(url_string);
+
+    // var c = url.searchParams.get("workerid");
+
+
   //   if ($.url().attr('query') == "") {
 		// logger('creating fake assignment');
 		// var params = create_test_assignment();
 		// var query_str = window.location.pathname + '?' + $.param(params);
 		// window.history.pushState("", "", query_str);
   //   }
-
   //   // getting study params from mturk 
-  //   assignment_id = $.url().param('assignmentId');
-  //   worker_id = $.url().param('workerId');
-  //   hit_id = $.url().param('hitId');
-  //   submit_to = $.url().param('turkSubmitTo');
+    assignment_id = url.searchParams.get('assignmentId');
+    worker_id = url.searchParams.get('workerId');
+    hit_id = url.searchParams.get('hitId');
+    submit_to = url.searchParams.get('turkSubmitTo');
 
 
 	hide_all();
 
 	// check whether this worker is a returning worker
-    // var workerset = get_workerset();
-    // if (workerset.has(worker_id)) {
-    //     $('#returning_worker').show();
-    //     return;
-    // }
+    var workerset = get_workerset();
+    if (workerset.has(worker_id)) {
+        $('#returning_worker').show();
+        return;
+    }
 
-    // if (assignment_id == 'ASSIGNMENT_ID_NOT_AVAILABLE') {
-    // 	$('#preview').show();
-    // 		return;
-    //     } else {
-    //     	// based on param, assign variables
-    // }
+    if (assignment_id == 'ASSIGNMENT_ID_NOT_AVAILABLE') {
+    	$('#preview').show();
+    		return;
+        } else {
+        	// based on param, assign variables
+    }
 
     // Show consent form
 	$('#consent').show();
-    // ts_consent_start = getDateTime();
+    ts_consent_start = getDateTime();
 }
 
 // hides all divs
@@ -106,6 +113,11 @@ function show_data_recall() {
 
 function submit_data_recall() {
     ts_demographics_start = getDateTime();
+    recall1 = $('#recall1').val()
+    recall2 = $('#recall2').val()
+    recall3 = $('#recall3').val()
+    recall4 = $('#recall4').val()
+    recall5 = $('#recall5').val()
 	show_demographics();
 }
 
@@ -121,26 +133,38 @@ function submit_demographics() {
 function show_submit_page() {
     hide_all();
     $('#final_submit').show();
-    // $('from#submit_to_turk').attr('action', submit_to + 'mturk/externalSubmit');
+    $('from#submit_to_turk').attr('action', submit_to + 'mturk/externalSubmit');
+    // submit_to_turk
+    // sandbox: "https://workersandbox.com/"
+    // production: "https://amazonmechanicalturk.com/"
     // logger('assignment is')
     // logger(assignment_id)
 
     // ts_submitted = getDateTime();
 
     // // add all the params you want to log 
-    // params = {
-    //     assignmentId: assignment_id,
-    //     workerId: worker_id,
-    //     hitId: hit_id,
-    //     ts_consent_start: ts_consent_start
-    //     ts_instruction_start: ts_instruction_start
-    //     ts_viewing_start: ts_viewing_start 
-    //     ts_game_instruction_start: ts_game_instruction_start
-    //     ts_recall_start: ts_recall_start
-    //     ts_demographics_start: ts_demographics_start
-    //     ts_submitted_:ts_submitted // if you change it to ts_submitted instead of ts_submitted_ this will break
-    // };
-    // logger(params)
+    params = {
+        assignmentId: assignment_id,
+        workerId: worker_id,
+        hitId: hit_id,
+        recall1: recall1,
+        recall2: recall2,
+        recall3: recall3,
+        recall4: recall4,
+        recall5: recall5,
+        ts_consent_start: ts_consent_start
+        ts_instruction_start: ts_instruction_start
+        ts_viewing_start: ts_viewing_start 
+        ts_game_instruction_start: ts_game_instruction_start
+        ts_recall_start: ts_recall_start
+        ts_demographics_start: ts_demographics_start
+        ts_submitted_:ts_submitted // if you change it to ts_submitted instead of ts_submitted_ this will break
+    };
+    logger(params)
+
+     $.each(params, function (name, val) {
+        $('form#submit_to_turk').append('<input type=hidden name="' + name + '" value="' + val + '" />');
+    });
 
 }
 
@@ -195,5 +219,6 @@ function getDateTime() {
 }
 
 
-
-
+function get_workerset() {
+    return new Set(["ABEKDKSE839827987", "workerid2"]);
+}

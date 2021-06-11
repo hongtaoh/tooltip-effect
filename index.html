@@ -126,31 +126,31 @@
                         <tr>
                             <td>Suicide</td>
                             <td>
-                                <input required type="number" placeholder="0.0" min="0" max="100" step=".1" /> %
+                                <input required id="recall1" type="number" placeholder="0.0" min="0" max="100" step=".1" /> %
                             </td>
                         </tr>
                         <tr>
                             <td>Car accidents</td>
                             <td>
-                                <input required type="number" placeholder="0.0" min="0" max="100" step=".1" /> %
+                                <input required id="recall2" type="number" placeholder="0.0" min="0" max="100" step=".1" /> %
                             </td>
                         </tr>
                         <tr>
                             <td>Cancer</td>
                             <td>
-                                <input required type="number" placeholder="0.0" min="0" max="100" step=".1" /> %
+                                <input required id="recall3" type="number" placeholder="0.0" min="0" max="100" step=".1" /> %
                             </td>
                         </tr>
                         <tr>
                             <td>Gun violence</td>
                             <td>
-                                <input required type="number" placeholder="0.0" min="0" max="100" step=".1" /> %
+                                <input required id="recall4" type="number" placeholder="0.0" min="0" max="100" step=".1" /> %
                             </td>
                         </tr>
                         <tr>
                             <td>Heart disease</td>
                             <td>
-                                <input required type="number" placeholder="0.0" min="0" max="100" step=".1" /> %
+                                <input required id="recall5" type="number" placeholder="0.0" min="0" max="100" step=".1" /> %
                             </td>
                         </tr>
                         <!-- and so on... -->
@@ -216,8 +216,7 @@
         <h3> Thank you for your participation! </h3>
         <h4> Now submit your responses. </h4>
 
-        <form id="submit_to_turk" method="post">
-
+        <form id="submit_to_turk" method="post"> 
             <p>Click "Submit" to submit your responses.</p>
             <input type=submit id=turk_form value="Submit answers back to turk" />
 
