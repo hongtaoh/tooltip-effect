@@ -1,6 +1,7 @@
 // turn on/off console logging
 var DEBUG_STATE = true;
 var recall1, recall2, recall3, recall4, recall5;
+
 // subject-level variables as globals
 // we need to declear all the variables that we need to record
 var assignment_id, worker_id, hit_id, submit_to;
@@ -47,6 +48,11 @@ function main() {
     // Show consent form
 	$('#consent').show();
     ts_consent_start = getDateTime();
+
+    // debug a page
+    // hide_all()
+    // show_data_viewing()
+    // show_data_recall()
 }
 
 // hides all divs
@@ -124,6 +130,8 @@ function submit_data_recall() {
 function show_demographics() {
 	hide_all();
 	$('#demographics').show();
+    // get the value from radio button input
+    // $("input:radio[name=rd]:checked").val()
 }
 
 function submit_demographics() {
@@ -140,7 +148,7 @@ function show_submit_page() {
     // logger('assignment is')
     // logger(assignment_id)
 
-    // ts_submitted = getDateTime();
+    ts_submitted = getDateTime();
 
     // // add all the params you want to log 
     params = {
@@ -152,15 +160,16 @@ function show_submit_page() {
         recall3: recall3,
         recall4: recall4,
         recall5: recall5,
-        ts_consent_start: ts_consent_start
-        ts_instruction_start: ts_instruction_start
-        ts_viewing_start: ts_viewing_start 
-        ts_game_instruction_start: ts_game_instruction_start
-        ts_recall_start: ts_recall_start
-        ts_demographics_start: ts_demographics_start
+        tooltips, tooltips,
+        ts_consent_start: ts_consent_start,
+        ts_instruction_start: ts_instruction_start,
+        ts_viewing_start: ts_viewing_start ,
+        ts_game_instruction_start: ts_game_instruction_start,
+        ts_recall_start: ts_recall_start,
+        ts_demographics_start: ts_demographics_start,
         ts_submitted_:ts_submitted // if you change it to ts_submitted instead of ts_submitted_ this will break
     };
-    logger(params)
+    logger(tooltips)
 
      $.each(params, function (name, val) {
         $('form#submit_to_turk').append('<input type=hidden name="' + name + '" value="' + val + '" />');

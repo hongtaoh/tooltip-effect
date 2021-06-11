@@ -1,6 +1,6 @@
 const w = 680;
 const h = 560;
-
+const tooltips = {"Heart disease":false, "Cancer":false, "Suicide":false, "Car accident":false, "Gun violence":false}
 const margin = ({
     top: 80,
     right: 120,
@@ -94,9 +94,14 @@ let bars = svg.selectAll('rect')
     .attr('height', d => h - margin.bottom - yScale(d.value))
     .attr('fill', 'steelblue')
     .on("mouseover", function(e, d) {
+        // d: 
+        // {cause: "Cancer", value: 0.21}
+        // {cause: "Heart disease", value: 0.231}
+        
         let xPosition = parseFloat(d3.select(this).attr('x')) + xScale.bandwidth() * 0.5;
         let yPosition = parseFloat(d3.select(this).attr('y')) - 10;
-
+        tooltips[d.cause] = true
+        // console.log(tooltips)
         svg.append('text')
             .attr("id", "tooltip")
             .attr('x', xPosition)
