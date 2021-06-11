@@ -34,7 +34,7 @@
         </div>
     </div>
     <div id="consent">
-        <h2>US Deaths, 2019</h2>
+        <h2>Deaths in the US, 2019</h2>
         <p>
             In this task, you’ll examine statistics of deaths in the United States in 2019. This task is part of a research project on decision making. We are interested in how you do on the task without the help of external resources.
         </p>
@@ -105,13 +105,14 @@
     <div id="data_recall">
         <h3>Data recall</h3>
         <p>Based on the data you have seen before, please answer the following question:</p>
+        <p>What percentage of deaths in the US in 2019 was due to each of the following causes?</p>
         <p>
             <b>You can't go back to the previous page. Please do NOT use any outside resources. Your answer does NOT affect your compensation!</b>
         </p>
         <p>
             <b>The input should be 0-100. Be aware of the "%" outside of the input box. For example, if the percentage is 1%, you only need to input "1" in the box.</b>
         </p>
-        <p>What percentage of deaths in the US in 2019 was due to each of the following causes?</p>
+        
         <form id="recall" action="javascript:submit_data_recall()">
             <div>
                 <table class="styled-table">
@@ -162,11 +163,11 @@
         </form>
     </div>
     <div id="demographics">
-        <form id="demo-form" action="javascript:submit_demographics">
+        <form id="demo-form" action="javascript:submit_demographics()">
             <h3>Demographics survey</h3>
             <p>1. What is the highest level of education you have achieved?</p>
             <!--      <label for="education">1. What is the highest level of education you have achieved?</label><br> -->
-            <select name="degree" id="degree">
+            <select required name="degree" id="degree">
                     <option value="">--Please choose your level of education--</option>
                     <option value="master">Master's degree or above</option>
                     <option value="bachelor">Bachelor's degree</option>
@@ -210,12 +211,29 @@
             </div>
         </form>
     </div>
-    <div id="thankyou">
-        <h3>Thank you for your participation!</h3>
-        <p>Thank you!</p>
+
+    <div id="final_submit" onsubmit="return validate_submit_page()">
+        <h3> Thank you for your participation! </h3>
+        <h4> Now submit your responses. </h4>
+
+        <form id="submit_to_turk" method="post">
+
+            <p>Click "Submit" to submit your responses.</p>
+            <input type=submit id=turk_form value="Submit answers back to turk" />
+
+        </form>
     </div>
+
+
+    <!-- Below is the script for the game -->
     <script type="module">
-        import { Runtime, Inspector } from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js"; import breakout from "https://api.observablehq.com/d/cbcdcfa816f807c0.js?v=3"; const rendersBreakout = { "viewof c": "#console", "viewof newgame": "#newgame", highscore: "#highscore", score: "#score", }; const runtimeBreakout = new Runtime(); const mainBreakout = runtimeBreakout.module(breakout, (name) => { const selector = rendersBreakout[name]; if (selector) { return new Inspector(document.querySelector(selector)); } else { return true; } });
+        import { Runtime, Inspector } from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js"; 
+        import breakout from "https://api.observablehq.com/d/cbcdcfa816f807c0.js?v=3"; 
+        const rendersBreakout = { "viewof c": "#console", "viewof newgame": "#newgame", highscore: "#highscore", score: "#score", }; 
+        const runtimeBreakout = new Runtime(); 
+        const mainBreakout = runtimeBreakout.module(breakout, (name) => { const selector = rendersBreakout[name]; if (selector) { 
+            return new Inspector(document.querySelector(selector)); 
+        } else { return true; } });
     </script>
 </body>
 
