@@ -1,7 +1,7 @@
 // turn on/off console logging
 const DEBUG_STATE = true;
 let recall1, recall2, recall3, recall4, recall5;
-const static = false;
+const static = true;
 
 // subject-level variables as globals
 // we need to declear all the variables that we need to record
@@ -26,7 +26,6 @@ function hide_all() {
     $('#consent').hide();
     $('#data_instructions').hide();
     $('#data_viewing').hide();
-    $('#data_viewing_static').hide();
     $('#game_instructions').hide();
     $('#game_play').hide();
     $('#data_recall').hide();
@@ -87,13 +86,9 @@ function submit_data_instructions(){
 
 function show_data_viewing() {
 	hide_all();
-    if (static) {
-       $('#data_viewing_static').show(); 
-    } else {
-        $('#data_viewing').show(); 
-    }
-	
+    $('#data_viewing').show(); 
 }
+	
 
 function submit_data_viewing() {
     ts_game_instruction_start = getDateTime();

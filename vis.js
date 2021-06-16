@@ -12,7 +12,7 @@ const margin = ({
 
 const scaleBarGap = 35;
 
-const svg = d3.select('#interactive-vis')
+const svg = d3.select('#vis')
     .append('svg')
     .attr('width', w)
     .attr('height', h)
@@ -40,7 +40,6 @@ const dataset = [{
     }
 ]
 
-
 let xScale = d3.scaleBand()
     .domain(dataset.map((s) => s.cause))
     .range([margin.left + scaleBarGap, w - margin.right])
@@ -58,28 +57,39 @@ let yAxis = d3.axisLeft()
 let xAxis = d3.axisBottom()
     .scale(xScale);
 
+if (static) {
+    svg.append("g").selectAll("text")
+   .data(dataset)
+   .join("text")
+   .attr('x', d => xScale(d.cause) + xScale.bandwidth() * 0.5)
+   .attr('y', d => yScale(d.value) - 10)
+   .text(d => d3.format(".1%")(d.value))
+   .attr('text-anchor', 'middle')
+   .attr('font-family', 'sans-serif')
+   .attr('font-size', '15px')
+   .attr('fill', 'black');
+} else {}
+
 svg.append('text')
     .attr('x', xScale(dataset[1].cause))
     .attr('y', 20)
     .text('Death Causes in the US in 2019')
     .attr('font-weight', 'bold')
     .attr('font-size', '17px')
-    .attr('font-family', "Helvetica Neue")
-
+    .attr('font-family', "Helvetica Neue");
 
 svg.append('text')
     .attr('x', margin.left)
     .attr('y', margin.top - 20)
     .attr('text-anchor', 'middle')
-    .text('Percentage')
-
+    .text('Percentage');
 
 svg.append('text')
     .attr('x', w / 2 + 40)
     .attr('y', h - margin.top + 30)
     .attr('text-anchor', 'middle')
     .text('Death causes')
-    .style('font-size', "18px")
+    .style('font-size', "18px");
 
 svg.append('text')
     .attr('x', w - margin.right - margin.left - scaleBarGap)
@@ -87,8 +97,18 @@ svg.append('text')
     .attr('text-anchor', 'middle')
     .text('Sources: CDC, Dept. of Transportation, & Gun Violence Archive')
     .attr('fill', 'grey')
-    .attr('font-size', '11px')
+    .attr('font-size', '11px');
 
+if (static) {
+    let bars = svg.selectAll('rect')
+    .data(dataset)
+    .join('rect')
+    .attr('x', d => xScale(d.cause))
+    .attr('y', d => yScale(d.value))
+    .attr('width', xScale.bandwidth())
+    .attr('height', d => h - margin.bottom - yScale(d.value))
+    .attr('fill', 'steelblue');
+} else {
 let bars = svg.selectAll('rect')
     .data(dataset)
     .join('rect')
@@ -96,7 +116,7 @@ let bars = svg.selectAll('rect')
     .attr('y', d => yScale(d.value))
     .attr('width', xScale.bandwidth())
     .attr('height', d => h - margin.bottom - yScale(d.value))
-    .attr('fill', 'steelblue')
+    .attr('fill', 'steelblue') 
     .on("mouseover", function(e, d) {
         // e stands for 'event'
         // d: 
@@ -121,8 +141,7 @@ let bars = svg.selectAll('rect')
     .on("mouseout", function() {
 
         d3.select("#tooltip").remove();
-    });
-
+    })};
 
 svg.append("g")
     .attr("class", "x axis")

@@ -7,6 +7,18 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+#preview,
+#returning_worker,
+#consent,
+#data_instructions,
+#data_viewing,
+#game_play,
+#data_recall,
+#demographics,
+#final_submit {
+    margin-top: 20px;
+}
+
 h1,
 h2,
 h3,

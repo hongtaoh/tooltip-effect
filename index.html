@@ -74,20 +74,8 @@
     <div id="data_viewing" class="center_text">
         <!-- <h3>Death Causes and Numbers in the US in 2019</h3> -->
         <p>You can see more data by hovering over each bar. After finishing data viewing, click “Continue”.</p>
-        <div id="interactive-vis"></div>
-        <script type="text/javascript" src="vis.js"></script>
-        <br/>
-        <div class="center_button">
-            <form id="submit_data_viewing," action="javascript:submit_data_viewing()">
-                <input type="submit" value="Continue" />
-            </form>
-        </div>
-    </div>
-    <div id="data_viewing_static" class="center_text">
-        <!-- <h3>Death Causes and Numbers in the US in 2019</h3> -->
-        <p>After finishing data viewing, click “Continue”.</p>
         <div id="vis"></div>
-        <script type="text/javascript" src="static-vis.js"></script>
+        <script type="text/javascript" src="vis.js"></script>
         <br/>
         <div class="center_button">
             <form id="submit_data_viewing," action="javascript:submit_data_viewing()">
@@ -103,7 +91,7 @@
             </p>
             <!--      <p>Click "Start" when ready.</p> -->
             <div class="center_button">
-                <button onclick="show_game_play(); setTimeout(countdown, 1000);">Start</button>
+                <button onclick="show_game_play(); setTimeout(countdown, 60000);">Start</button>
             </div>
             <!--    I learned it here: https://www.w3schools.com/js/js_timing.asp -->
         </div>
