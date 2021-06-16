@@ -36,10 +36,15 @@
     <div id="consent">
         <h2>Deaths in the US, 2019</h2>
         <p>
-            In this task, you’ll examine statistics of deaths in the United States in 2019. This task is part of a research project on decision making. We are interested in how you do on the task without the help of external resources.
+            In this task, you’ll examine statistics of deaths in the United States in 2019. This task is part of a research project on data representation. We are interested in how you do on the task without the help of external resources.
         </p>
         <p>You will be compensated $XXX for your participation. This HIT should take no more than XX minutes to complete.</p>
-        <hr />
+        <form id="consent_form" action="javascript:submit_consent()">
+            <div class="center_button">
+                <input type="submit" id="submit_consent" value="Continue" />
+            </div>
+        </form>
+        <!-- <hr />
         <h3>Study Consent Form</h3>
         <p>CONSENT FORM</p>
         <p>By clicking “I agree” below, you confirm that you understand what the project is about and how and why it is being done. Should you have any questions concerning this project, please contact XXXXXXX.</p>
@@ -54,26 +59,35 @@
                     
                     </label>
             </div>
-            <div class="center_button">
-                <input type="submit" id="submit_consent" value="Continue" />
-            </div>
+        <div class="center_button">
+            <input type="submit" id="submit_consent" value="Continue" />
+        </div>
+        </form> -->
+    </div>
+    <div id="data_instructions" class="center_text">
+        <h3>In the next page, you'll see a chart displaying death causes and numbers in 2019 in the US.</h3>
+        <p>When ready, click "Continue".</p>
+        <form id="submit_data_instructions," action="javascript:submit_data_instructions()">
+            <input type="submit" value="Continue" />
         </form>
     </div>
-    <div id="data_instructions">
-        <h3>In the next page, you'll see a chart displaying death causes and numbers in 2019 in the US.</h3>
-        <p>To proceed, please click "Continue".</p>
+    <div id="data_viewing" class="center_text">
+        <!-- <h3>Death Causes and Numbers in the US in 2019</h3> -->
+        <p>You can see more data by hovering over each bar. After finishing data viewing, click “Continue”.</p>
+        <div id="interactive-vis"></div>
+        <script type="text/javascript" src="vis.js"></script>
+        <br/>
         <div class="center_button">
-            <form id="submit_data_instructions," action="javascript:submit_data_instructions()">
+            <form id="submit_data_viewing," action="javascript:submit_data_viewing()">
                 <input type="submit" value="Continue" />
             </form>
         </div>
     </div>
-    <div id="data_viewing" class="center_text">
+    <div id="data_viewing_static" class="center_text">
         <!-- <h3>Death Causes and Numbers in the US in 2019</h3> -->
-        <p>You can see more data by hovering over each bar.</p>
-        <p>After you finish viewing the data, click “Continue”</p>
+        <p>After finishing data viewing, click “Continue”.</p>
         <div id="vis"></div>
-        <script type="text/javascript" src="vis.js"></script>
+        <script type="text/javascript" src="static-vis.js"></script>
         <br/>
         <div class="center_button">
             <form id="submit_data_viewing," action="javascript:submit_data_viewing()">
@@ -85,7 +99,7 @@
         <div id="game_instructions">
             <h3>Breakout! Game</h3>
             <p>You are now going to play a game for 1 minute.
-                <b>Your score won't affect your compensation.</b>
+                <b>Your score will NOT affect your compensation.</b>
             </p>
             <!--      <p>Click "Start" when ready.</p> -->
             <div class="center_button">
@@ -118,27 +132,21 @@
                 <table class="styled-table">
                     <thead>
                         <tr>
-                            <th>Cause</th>
+                            <th>Causes (in alphabetical order)</th>
                             <th>Deaths</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Suicide</td>
+                            <td>Cancer</td>
                             <td>
-                                <input required id="recall1" type="number" placeholder="0.0" min="0" max="100" step=".1" /> %
+                                <input required id="recall3" type="number" placeholder="0.0" min="0" max="100" step=".1" /> %
                             </td>
                         </tr>
                         <tr>
                             <td>Car accidents</td>
                             <td>
                                 <input required id="recall2" type="number" placeholder="0.0" min="0" max="100" step=".1" /> %
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Cancer</td>
-                            <td>
-                                <input required id="recall3" type="number" placeholder="0.0" min="0" max="100" step=".1" /> %
                             </td>
                         </tr>
                         <tr>
@@ -153,11 +161,17 @@
                                 <input required id="recall5" type="number" placeholder="0.0" min="0" max="100" step=".1" /> %
                             </td>
                         </tr>
+                        <tr>
+                            <td>Suicide</td>
+                            <td>
+                                <input required id="recall1" type="number" placeholder="0.0" min="0" max="100" step=".1" /> %
+                            </td>
+                        </tr>
                         <!-- and so on... -->
                     </tbody>
                 </table>
             </div>
-            <div>
+            <div class="center_button">
                 <input type="submit" value="Continue" />
             </div>
         </form>
@@ -165,7 +179,12 @@
     <div id="demographics">
         <form id="demo-form" action="javascript:submit_demographics()">
             <h3>Demographics survey</h3>
-            <p>1. What is the highest level of education you have achieved?</p>
+            <p>1. Have you seen similar dataset before?</p>
+            <input type="radio" name="similar_data" value="similar_yes" required/> Yes
+            <br />
+            <input type="radio" name="similar_data" value="simiar_no" required/> No
+            
+            <p>2. What is the highest level of education you have achieved?</p>
             <!--      <label for="education">1. What is the highest level of education you have achieved?</label><br> -->
             <select required name="degree" id="degree">
                     <option value="">--Please choose your level of education--</option>
@@ -176,43 +195,45 @@
                     <option value="some_high_school">Some high school</option>
                     <option value="edu_not_to_say">Prefer not to say</option>
                 </select>
-            <p>2. What's your gender?</p>
+
+            <p>3. What's your gender?</p>
             <!--  <label for="gender">2. What's your gender?</label><br> -->
-            <input type="radio" name="gender" value="male" /> Male
+            <input type="radio" name="gender" value="male" required/> Male
             <br />
-            <input type="radio" name="gender" value="female" /> Female
+            <input type="radio" name="gender" value="female" required/> Female
             <br />
-            <input type="radio" name="gender" value="other" /> Non-binary
+            <input type="radio" name="gender" value="other" required /> Non-binary
             <br />
-            <input type="radio" name="gender" value="gender_not_to_say" /> Prefer not to say
+            <input type="radio" name="gender" value="gender_not_to_say" required/> Prefer not to say
             
-            <p>3. What's your age?</p>
+            <p>4. What's your age?</p>
             <!--      <label for="age">3. Your age</label><br> -->
-            <input required type="number" placeholder="18" min="0" max="130" />
-            <p>4. What's your ethinic background?</p>
-            <input type="radio" name="ethnicity" value="white" /> White/Caucasian
+            <input required type="number" id="age" placeholder="18" min="0" max="130" />
+
+            <p>5. What's your ethinic background?</p>
+            <input type="radio" name="ethnicity" value="white" required /> White/Caucasian
             <br />
-            <input type="radio" name="ethnicity" value="east_asian" /> Asian - Eastern
+            <input type="radio" name="ethnicity" value="east_asian" required/> Asian - Eastern
             <br />
-            <input type="radio" name="ethnicity" value="indian_asian" /> Asian - Indian
+            <input type="radio" name="ethnicity" value="indian_asian" required/> Asian - Indian
             <br />
-            <input type="radio" name="ethnicity" value="hispanic" /> Hispanic
+            <input type="radio" name="ethnicity" value="hispanic" required/> Hispanic
             <br />
-            <input type="radio" name="ethnicity" value="african_american" /> African-American
+            <input type="radio" name="ethnicity" value="african_american" required/> African-American
             <br />
-            <input type="radio" name="ethnicity" value="native_american" /> Native-American
+            <input type="radio" name="ethnicity" value="native_american" required/> Native-American
             <br />
-            <input type="radio" name="ethnicity" value="other" /> Other
+            <input type="radio" name="ethnicity" value="other" required/> Other
             <br />
-            <input type="radio" name="ethnicity" value="ethnicity_not_to_say" /> Prefer not to say
+            <input type="radio" name="ethnicity" value="ethnicity_not_to_say" required/> Prefer not to say
             <br>
             <div class="center_button">
-                <input type="submit" value="Submit" />
+                <input type="submit" value="Continue" />
             </div>
         </form>
     </div>
 
-    <div id="final_submit" onsubmit="return validate_submit_page()">
+    <div id="final_submit" class="center_text" onsubmit="return validate_submit_page()">
         <h3> Thank you for your participation! </h3>
         <h4> Now submit your responses. </h4>
 

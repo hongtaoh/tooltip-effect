@@ -1,38 +1,51 @@
 // turn on/off console logging
-var DEBUG_STATE = true;
-var recall1, recall2, recall3, recall4, recall5;
+const DEBUG_STATE = true;
+let recall1, recall2, recall3, recall4, recall5;
+const static = false;
 
 // subject-level variables as globals
 // we need to declear all the variables that we need to record
-var assignment_id, worker_id, hit_id, submit_to;
-var ts_consent_start; 
+let assignment_id, worker_id, hit_id, submit_to;
+let ts_consent_start, 
+    ts_instruction_start, ts_viewing_start, 
+    ts_game_instruction_start, ts_recall_start, 
+    ts_demographics_start, ts_submitted_;
+let demo_similar_data, demo_degree, demo_gender, demo_age, demo_ethnicity;
+
+function getURLParams(mturk_param) {
+    let url_string = window.location.href
+    let url = new URL(url_string);
+    let param = url.searchParams.get(mturk_param)
+    return param;
+}
+
+// hides all divs
+function hide_all() {
+    $('#preview').hide();
+    $('#returning_worker').hide();
+    $('#consent').hide();
+    $('#data_instructions').hide();
+    $('#data_viewing').hide();
+    $('#data_viewing_static').hide();
+    $('#game_instructions').hide();
+    $('#game_play').hide();
+    $('#data_recall').hide();
+    $('#demographics').hide();
+    $('#final_submit').hide();
+    // $('#thankyou').hide();
+}
 
 function main() {
-	// create fake assignment id, hit id, and worker id if none provided
-
-    var url_string = window.location.href
-    var url = new URL(url_string);
-
-    // var c = url.searchParams.get("workerid");
-
-
-  //   if ($.url().attr('query') == "") {
-		// logger('creating fake assignment');
-		// var params = create_test_assignment();
-		// var query_str = window.location.pathname + '?' + $.param(params);
-		// window.history.pushState("", "", query_str);
-  //   }
-  //   // getting study params from mturk 
-    assignment_id = url.searchParams.get('assignmentId');
-    worker_id = url.searchParams.get('workerId');
-    hit_id = url.searchParams.get('hitId');
-    submit_to = url.searchParams.get('turkSubmitTo');
-
+  // getting study params from mturk 
+    assignment_id = getURLParams('assignmentId');
+    worker_id = getURLParams('workerId');
+    hit_id = getURLParams('hitId');
+    submit_to = getURLParams('turkSubmitTo');
 
 	hide_all();
 
 	// check whether this worker is a returning worker
-    var workerset = get_workerset();
+    let workerset = get_workerset();
     if (workerset.has(worker_id)) {
         $('#returning_worker').show();
         return;
@@ -53,21 +66,8 @@ function main() {
     // hide_all()
     // show_data_viewing()
     // show_data_recall()
-}
-
-// hides all divs
-function hide_all() {
-    $('#preview').hide();
-    $('#returning_worker').hide();
-    $('#consent').hide();
-    $('#data_instructions').hide();
-    $('#data_viewing').hide();
-    $('#game_instructions').hide();
-    $('#game_play').hide();
-    $('#data_recall').hide();
-    $('#demographics').hide();
-    $('#final_submit').hide();
-    // $('#thankyou').hide();
+    // show_demographics()
+    // show_data_recall()
 }
 
 function submit_consent() {
@@ -87,7 +87,12 @@ function submit_data_instructions(){
 
 function show_data_viewing() {
 	hide_all();
-	$('#data_viewing').show();
+    if (static) {
+       $('#data_viewing_static').show(); 
+    } else {
+        $('#data_viewing').show(); 
+    }
+	
 }
 
 function submit_data_viewing() {
@@ -131,7 +136,12 @@ function show_demographics() {
 	hide_all();
 	$('#demographics').show();
     // get the value from radio button input
-    // $("input:radio[name=rd]:checked").val()
+    demo_similar_data = $("input[type='radio'][name='similar_data']:checked").val();
+    demo_degree = $("#degree :selected").val(); // https://stackoverflow.com/a/8549358/13716814
+    demo_gender = $("input[type='radio'][name='gender']:checked").val();
+    //https://www.w3schools.com/jsref/prop_number_value.asp:
+    demo_age = document.getElementById("age").value; 
+    demo_ethnicity = $("input[type='radio'][name='ethnicity']:checked").val();
 }
 
 function submit_demographics() {
@@ -155,20 +165,31 @@ function show_submit_page() {
         assignmentId: assignment_id,
         workerId: worker_id,
         hitId: hit_id,
+        // recall data:
         recall1: recall1,
         recall2: recall2,
         recall3: recall3,
         recall4: recall4,
         recall5: recall5,
+        // tooktips:
         tooltips, tooltips,
+        // time stamps:
         ts_consent_start: ts_consent_start,
         ts_instruction_start: ts_instruction_start,
         ts_viewing_start: ts_viewing_start ,
         ts_game_instruction_start: ts_game_instruction_start,
         ts_recall_start: ts_recall_start,
         ts_demographics_start: ts_demographics_start,
-        ts_submitted_:ts_submitted // if you change it to ts_submitted instead of ts_submitted_ this will break
+        // if you change it to ts_submitted instead of ts_submitted_ this will break:
+        ts_submitted_: ts_submitted,
+        // demographics
+        demo_similar_data: demo_similar_data,
+        demo_degree: demo_degree,
+        demo_gender: demo_gender,
+        demo_age: demo_age,
+        demo_ethnicity: demo_ethnicity
     };
+
     logger(tooltips)
 
      $.each(params, function (name, val) {
@@ -176,7 +197,6 @@ function show_submit_page() {
     });
 
 }
-
 
 //generate fake assignment_id, worker_id, and hit_id
 function create_test_assignment() {

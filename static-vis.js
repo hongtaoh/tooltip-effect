@@ -1,6 +1,5 @@
 const w = 680;
 const h = 560;
-const tooltips = {"Heart disease":false, "Cancer":false, "Suicide":false, "Car accident":false, "Gun violence":false}
 const margin = ({
     top: 80,
     right: 120,
@@ -8,11 +7,9 @@ const margin = ({
     left: 80
 });
 
-// let testing = 1;
-
 const scaleBarGap = 35;
 
-const svg = d3.select('#interactive-vis')
+const svg = d3.select('#vis')
     .append('svg')
     .attr('width', w)
     .attr('height', h)
@@ -58,28 +55,37 @@ let yAxis = d3.axisLeft()
 let xAxis = d3.axisBottom()
     .scale(xScale);
 
+svg.selectAll("text")
+   .data(dataset)
+   .join("text")
+   .attr('x', d => xScale(d.cause) + xScale.bandwidth() * 0.5)
+   .attr('y', d => yScale(d.value) - 10)
+   .text(d => d3.format(".1%")(d.value))
+   .attr('text-anchor', 'middle')
+   .attr('font-family', 'sans-serif')
+   .attr('font-size', '15px')
+   .attr('fill', 'black');
+   
 svg.append('text')
     .attr('x', xScale(dataset[1].cause))
     .attr('y', 20)
     .text('Death Causes in the US in 2019')
     .attr('font-weight', 'bold')
     .attr('font-size', '17px')
-    .attr('font-family', "Helvetica Neue")
-
+    .attr('font-family', "Helvetica Neue");
 
 svg.append('text')
     .attr('x', margin.left)
     .attr('y', margin.top - 20)
     .attr('text-anchor', 'middle')
-    .text('Percentage')
-
+    .text('Percentage');
 
 svg.append('text')
     .attr('x', w / 2 + 40)
     .attr('y', h - margin.top + 30)
     .attr('text-anchor', 'middle')
     .text('Death causes')
-    .style('font-size', "18px")
+    .style('font-size', "18px");
 
 svg.append('text')
     .attr('x', w - margin.right - margin.left - scaleBarGap)
@@ -87,7 +93,7 @@ svg.append('text')
     .attr('text-anchor', 'middle')
     .text('Sources: CDC, Dept. of Transportation, & Gun Violence Archive')
     .attr('fill', 'grey')
-    .attr('font-size', '11px')
+    .attr('font-size', '11px');
 
 let bars = svg.selectAll('rect')
     .data(dataset)
@@ -96,46 +102,19 @@ let bars = svg.selectAll('rect')
     .attr('y', d => yScale(d.value))
     .attr('width', xScale.bandwidth())
     .attr('height', d => h - margin.bottom - yScale(d.value))
-    .attr('fill', 'steelblue')
-    .on("mouseover", function(e, d) {
-        // e stands for 'event'
-        // d: 
-        // {cause: "Cancer", value: 0.21}
-        // {cause: "Heart disease", value: 0.231}
-        // testing = e;
-        let xPosition = parseFloat(d3.select(this).attr('x')) + xScale.bandwidth() * 0.5;
-        let yPosition = parseFloat(d3.select(this).attr('y')) - 10;
-        tooltips[d.cause] = true
-        // console.log(tooltips)
-        svg.append('text')
-            .attr("id", "tooltip")
-            .attr('x', xPosition)
-            .attr('y', yPosition)
-            .text(d.cause + ": " + d3.format(".1%")(d.value))
-            .attr('text-anchor', 'middle')
-            .attr('font-family', 'sans-serif')
-            .attr('font-size', '15px')
-            .attr('fill', 'black');
-
-    })
-    .on("mouseout", function() {
-
-        d3.select("#tooltip").remove();
-    });
-
+    .attr('fill', 'steelblue');
 
 svg.append("g")
     .attr("class", "x axis")
     .attr("transform", "translate(0, " + (h - margin.bottom) + ")")
     .call(xAxis)
     .selectAll(".tick text")
-    .call(wrap, xScale.bandwidth())
+    .call(wrap, xScale.bandwidth());
 
 svg.append('g')
     .attr('class', 'y axis')
     .attr('transform', 'translate(' + margin.left + ', 0)')
     .call(yAxis);
-
 
 function wrap(text, width) {
     text.each(function() {
@@ -161,4 +140,4 @@ function wrap(text, width) {
             }
         }
     })
-}
+};
