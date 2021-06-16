@@ -1,8 +1,8 @@
 // turn on/off console logging
 const DEBUG_STATE = true;
 let recall1, recall2, recall3, recall4, recall5;
-const static = true;
-
+// const static = true;
+const static = Math.random() < 0.5;
 // subject-level variables as globals
 // we need to declear all the variables that we need to record
 let assignment_id, worker_id, hit_id, submit_to;
@@ -40,7 +40,6 @@ function main() {
     worker_id = getURLParams('workerId');
     hit_id = getURLParams('hitId');
     submit_to = getURLParams('turkSubmitTo');
-
 	hide_all();
 
 	// check whether this worker is a returning worker
@@ -87,6 +86,11 @@ function submit_data_instructions(){
 function show_data_viewing() {
 	hide_all();
     $('#data_viewing').show(); 
+    if (static) {
+        $("#condition-msg-hover").text('Please examine the data carefully. After finishing data viewing, click "Continue".')
+    } else {
+        $("#condition-msg-hover").text('You can see more data by hovering over each bar. After finishing data viewing, click "Continue".')
+    }
 }
 	
 
@@ -154,7 +158,6 @@ function show_submit_page() {
     // logger(assignment_id)
 
     ts_submitted = getDateTime();
-
     // // add all the params you want to log 
     params = {
         assignmentId: assignment_id,
@@ -185,7 +188,7 @@ function show_submit_page() {
         demo_ethnicity: demo_ethnicity
     };
 
-    logger(tooltips)
+    logger(params)
 
      $.each(params, function (name, val) {
         $('form#submit_to_turk').append('<input type=hidden name="' + name + '" value="' + val + '" />');
