@@ -57,7 +57,7 @@ let yAxis = d3.axisLeft()
 let xAxis = d3.axisBottom()
     .scale(xScale);
 
-if (static) {
+if (!tooltip_on) {
     svg.append("g").selectAll("text")
    .data(dataset)
    .join("text")
@@ -99,7 +99,7 @@ svg.append('text')
     .attr('fill', 'grey')
     .attr('font-size', '11px');
 
-if (static) {
+if (!tooltip_on) {
     let bars = svg.selectAll('rect')
     .data(dataset)
     .join('rect')

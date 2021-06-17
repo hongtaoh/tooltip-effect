@@ -1,8 +1,7 @@
 // turn on/off console logging
 const DEBUG_STATE = true;
 let recall1, recall2, recall3, recall4, recall5;
-// const static = true;
-const static = Math.random() < 0.5;
+const tooltip_on = Math.random() < 0.5;
 // subject-level variables as globals
 // we need to declear all the variables that we need to record
 let assignment_id, worker_id, hit_id, submit_to;
@@ -89,7 +88,7 @@ function submit_data_instructions(){
 function show_data_viewing() {
 	hide_all();
     $('#data_viewing').show(); 
-    if (static) {
+    if (!tooltip_on) {
         $("#condition-msg-hover").text('Please examine the data carefully. After finishing data viewing, click "Continue".')
     } else {
         $("#condition-msg-hover").text('You can see more data by hovering over each bar. After finishing data viewing, click "Continue".')
