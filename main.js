@@ -19,6 +19,8 @@ function getURLParams(mturk_param) {
     return param;
 }
 
+logger(submit_to)
+
 // hides all divs
 function hide_all() {
     $('#preview').hide();
@@ -31,7 +33,8 @@ function hide_all() {
     $('#data_recall').hide();
     $('#demographics').hide();
     $('#final_submit').hide();
-    // $('#thankyou').hide();
+
+    $(window).scrollTop(0);
 }
 
 function main() {
