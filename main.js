@@ -18,7 +18,9 @@ function getURLParams(mturk_param) {
     return param;
 }
 
-logger(DEBUG_STATE)
+submit_to = getURLParams('turkSubmitTo');
+
+// logger(DEBUG_STATE)
 
 logger(submit_to)
 
