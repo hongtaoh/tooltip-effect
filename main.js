@@ -18,6 +18,8 @@ function getURLParams(mturk_param) {
     return param;
 }
 
+logger(DEBUG_STATE)
+
 logger(submit_to)
 
 // hides all divs
