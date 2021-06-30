@@ -156,7 +156,7 @@ function submit_demographics() {
 function show_submit_page() {
     hide_all();
     $('#final_submit').show();
-    $('from#submit_to_turk').attr('action', submit_to + 'mturk/externalSubmit');
+    $('from#submit_to_turk').attr('action', 'https://workersandbox.mturk.com/mturk/externalSubmit');
     // submit_to_turk
     // sandbox: "https://workersandbox.com/"
     // production: "https://amazonmechanicalturk.com/"
