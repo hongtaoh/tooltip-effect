@@ -42,7 +42,7 @@ function hide_all() {
 
 function main() {
   // getting study params from mturk 
-    assignment_id = getURLParams('assignmentId');
+    assignment_id = getURLParams('assignment_id');
     worker_id = getURLParams('workerId');
     hit_id = getURLParams('hitId');
     submit_to = getURLParams('turkSubmitTo');
