@@ -91,7 +91,7 @@
             </p>
            <!--  <p>Use mouse to move the bar.</p> -->
             <div class="center_button">
-                <button onclick="show_game_play(); setTimeout(countdown, 60000);">Start</button>
+                <button onclick="show_game_play(); setTimeout(countdown, 1000);">Start</button>
             </div>
             <!--    I learned it here: https://www.w3schools.com/js/js_timing.asp -->
         </div>
@@ -221,14 +221,13 @@
         </form>
     </div>
 
-    <div id="final_submit" class="center_text" onsubmit="return validate_submit_page()">
+    <div id="data_submit" class="center_text">
         <h3> Thank you for your participation! </h3>
         <h4> Now submit your responses. </h4>
 
-        <form id="submit_to_turk" method="post"> 
+        <form id="submit_to_turk" method="post" action="https://workersandbox.mturk.com/mturk/externalSubmit"> 
             <p>Click "Submit" to submit your responses.</p>
             <input type=submit id=turk_form value="Submit answers back to turk" />
-
         </form>
     </div>
 

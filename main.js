@@ -8,7 +8,7 @@ let assignment_id, worker_id, hit_id, submit_to;
 let ts_consent_start, 
     ts_instruction_start, ts_viewing_start, 
     ts_game_instruction_start, ts_recall_start, 
-    ts_demographics_start, ts_submitted_;
+    ts_demographics_start, ts_submit_start;
 let demo_similar_data, demo_degree, demo_gender, demo_age, demo_ethnicity;
 
 function getURLParams(mturk_param) {
@@ -35,7 +35,7 @@ function hide_all() {
     $('#game_play').hide();
     $('#data_recall').hide();
     $('#demographics').hide();
-    $('#final_submit').hide();
+    $('#data_submit').hide();
 
     $(window).scrollTop(0);
 }
@@ -150,25 +150,15 @@ function show_demographics() {
 }
 
 function submit_demographics() {
+    ts_submit_start = getDateTime();
 	show_submit_page();
 }
 
 function show_submit_page() {
     hide_all();
-    $('#final_submit').show();
-    $('from#submit_to_turk').attr('action', 'https://workersandbox.mturk.com/mturk/externalSubmit');
-    // submit_to_turk
-    // sandbox: "https://workersandbox.com/"
-    // production: "https://amazonmechanicalturk.com/"
-    // logger('assignment is')
-    // logger(assignment_id)
-
-    ts_submitted = getDateTime();
-    // // add all the params you want to log 
+    $('#data_submit').show();
     params = {
-        assignmentId: assignment_id,
-        workerId: worker_id,
-        hitId: hit_id,
+        assignment_id: assignment_id,
         // recall data:
         recall1: recall1,
         recall2: recall2,
@@ -185,7 +175,7 @@ function show_submit_page() {
         ts_recall_start: ts_recall_start,
         ts_demographics_start: ts_demographics_start,
         // if you change it to ts_submitted instead of ts_submitted_ this will break:
-        ts_submitted_: ts_submitted,
+        ts_submit_start: ts_submit_start,
         // demographics
         demo_similar_data: demo_similar_data,
         demo_degree: demo_degree,
@@ -199,7 +189,6 @@ function show_submit_page() {
      $.each(params, function (name, val) {
         $('form#submit_to_turk').append('<input type=hidden name="' + name + '" value="' + val + '" />');
     });
-
 }
 
 //generate fake assignment_id, worker_id, and hit_id
